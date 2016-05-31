@@ -1,7 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FileHelpers;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace CAppBulkAndFileHelpers.Models
 {
+    [DelimitedRecord("|")]
     [Table("Produtos")]
     public class Produto
     {
