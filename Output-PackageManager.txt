@@ -1,0 +1,20 @@
+﻿Attempting to gather dependency information for package 'Castle.Activerecord.3.0.0.1' with respect to project 'App.Web', targeting '.NETFramework,Version=v4.6.1'
+Attempting to resolve dependencies for package 'Castle.Activerecord.3.0.0.1' with DependencyBehavior 'Lowest'
+Resolving actions to install package 'Castle.Activerecord.3.0.0.1'
+Resolved actions to install package 'Castle.Activerecord.3.0.0.1'
+Package 'Castle.Components.Validator.2.5.0' already exists in folder 'C:\Users\Fulvio\documents\visual studio 2015\Projects\CAppBulkAndFileHelpers\packages'
+Added package 'Castle.Components.Validator.2.5.0' to 'packages.config'
+Successfully installed 'Castle.Components.Validator 2.5.0' to App.Web
+Package 'Castle.Core.2.5.1' already exists in folder 'C:\Users\Fulvio\documents\visual studio 2015\Projects\CAppBulkAndFileHelpers\packages'
+Added package 'Castle.Core.2.5.1' to 'packages.config'
+Successfully installed 'Castle.Core 2.5.1' to App.Web
+Package 'Iesi.Collections.1.0.1' already exists in folder 'C:\Users\Fulvio\documents\visual studio 2015\Projects\CAppBulkAndFileHelpers\packages'
+Added package 'Iesi.Collections.1.0.1' to 'packages.config'
+Successfully installed 'Iesi.Collections 1.0.1' to App.Web
+Package 'NHibernate.3.0.0.4000' already exists in folder 'C:\Users\Fulvio\documents\visual studio 2015\Projects\CAppBulkAndFileHelpers\packages'
+Added package 'NHibernate.3.0.0.4000' to 'packages.config'
+Successfully installed 'NHibernate 3.0.0.4000' to App.Web
+Package 'Castle.Activerecord.3.0.0.1' already exists in folder 'C:\Users\Fulvio\documents\visual studio 2015\Projects\CAppBulkAndFileHelpers\packages'
+Added package 'Castle.Activerecord.3.0.0.1' to 'packages.config'
+Successfully installed 'Castle.Activerecord 3.0.0.1' to App.Web
+========== Finished ==========
