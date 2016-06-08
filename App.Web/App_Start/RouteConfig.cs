@@ -13,6 +13,23 @@ namespace App.Web
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+
+            //routes.MapRoute(
+            //    name: "Produto",
+            //    url: "Produto/{name}/{action}",
+            //    defaults: new { controller = "Produto", action = "Index" },
+            //    constraints: new { name = @"^[a-z\.]{3,20}$" }
+            //);
+
+            routes.MapRoute(
+                 name: "ProdutoIndex",
+                 url: "Produto/{name}",
+                 defaults: new { controller = "Produto", action = "Index" },
+                 constraints: new { name = @"^[a-z\.-]{3,20}$" }
+             );
+
+
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

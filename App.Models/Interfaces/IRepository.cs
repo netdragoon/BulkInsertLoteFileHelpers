@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Castle.ActiveRecord;
-using NHibernate.Criterion;
 
 namespace App.Models.Interfaces
 {
@@ -12,7 +11,7 @@ namespace App.Models.Interfaces
         bool Delete(T model);
         T Find(object id);
         IEnumerable<T> All();
-        IEnumerable<T> All(Order order);
-        IEnumerable<T> All(Order[] order);
+        IEnumerable<T> All(NHibernate.Criterion.Order order);
+        IEnumerable<T> All(NHibernate.Criterion.Order[] order);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Castle.ActiveRecord;
+
 namespace App.Models
 {
     [ActiveRecord(Table = "tbproduct", Cache = CacheEnum.ReadWrite)]
@@ -6,8 +7,9 @@ namespace App.Models
     {
         public Product()
         {
-
+            
         }
+
         public Product(string description)
         {
             Description = description;

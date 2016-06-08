@@ -1,5 +1,7 @@
-﻿using Castle.ActiveRecord;
+﻿using System.Collections;
 using System.Collections.Generic;
+using Castle.ActiveRecord;
+
 namespace App.Models
 {
     [ActiveRecord(Table = "tbcategory", Cache = CacheEnum.ReadWrite)]    
@@ -22,6 +24,6 @@ namespace App.Models
         public string Description { get; set; }
                 
         [HasMany(typeof(Product), Table = "tbproduct", ColumnKey = "categoryid")]
-        public IList<Product> Product { get; set; }
+        public IList Product { get; set; }
     }
 }
