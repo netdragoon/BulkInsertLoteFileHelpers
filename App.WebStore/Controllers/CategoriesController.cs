@@ -1,15 +1,21 @@
 ﻿using App.WebStore.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Castle.Components.Validator;
 using NHibernate.Criterion;
+using App.WebStore.Models.ValidatorExtension;
+
 
 namespace App.WebStore.Controllers
 {
     public class CategoriesController : Controller
     {
-        
+        public IValidatorRunner Runner { get; set; }
+        public CategoriesController()
+        {
+            Runner = new ValidatorRunner(new CachedValidationRegistry());
+        }
         [HttpGet]
         public ActionResult Index()
         {
@@ -26,8 +32,13 @@ namespace App.WebStore.Controllers
         [HttpPost]
         public ActionResult Create(Category model)
         {
-            model.CreateAndFlush();
-            return RedirectToAction("Index");
+            if (Runner.IsValid(model))
+            {
+                model.CreateAndFlush();
+                return RedirectToAction("Index");
+            }
+            ModelState.AddModelError(Runner.GetErrors(model));
+            return View(model);
         }
 
         [HttpGet]
@@ -48,8 +59,15 @@ namespace App.WebStore.Controllers
         [HttpPost]
         public ActionResult Edit(Category model)
         {
-            model.Update();
-            return RedirectToAction("Index");
+            if (Runner.IsValid(model))
+            {
+                Category local = Category.TryFind(model.Id);
+                local.Description = model.Description;
+                local.UpdateAndFlush();
+                return RedirectToAction("Index");
+            }
+            ModelState.AddModelError(Runner.GetErrors(model));
+            return View(model);
         }
     }
 }

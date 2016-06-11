@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Castle.ActiveRecord;
+using Castle.Components.Validator;
 
 namespace App.WebStore.Models
 {
@@ -20,7 +21,8 @@ namespace App.WebStore.Models
         [PrimaryKey(Generator = PrimaryKeyType.Increment, Column = "id")]
         public virtual long Id { get; set; }
         
-        [Property(Column = "description", Length = 60)]        
+        [Property(Column = "description", Length = 60)]   
+        [ValidateNonEmpty("Digite a descrição")]     
         public virtual string Description { get; set; }
                 
         [HasMany(typeof(Product), Table = "tbproduct", ColumnKey = "categoryid", Cascade = ManyRelationCascadeEnum.None, Lazy = true)]

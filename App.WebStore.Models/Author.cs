@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Castle.ActiveRecord;
-using NHibernate.Mapping;
 
 namespace App.WebStore.Models
 {
@@ -18,11 +16,7 @@ namespace App.WebStore.Models
 
         [Property(Column = "name", Length = 60)]
         public virtual string Name { get; set; }
-
-        //[HasAndBelongsToMany(typeof(Category),
-        //Table = "PostCategory", ColumnKey = "postid", ColumnRef = "categoryid")]
-        //public IList Categories
-
+        
         [HasAndBelongsToMany(typeof(Book), Table = "tbauthorbook", ColumnKey = "authorid", ColumnRef = "bookid")]
         public virtual IList<Book> Books { get; set; }
     }
