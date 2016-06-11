@@ -5,8 +5,6 @@ using System.Web.Mvc;
 using Castle.Components.Validator;
 using NHibernate.Criterion;
 using App.WebStore.Models.ValidatorExtension;
-
-
 namespace App.WebStore.Controllers
 {
     public class CategoriesController : Controller
