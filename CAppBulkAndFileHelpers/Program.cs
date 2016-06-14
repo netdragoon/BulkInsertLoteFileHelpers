@@ -4,9 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CAppBulkAndFileHelpers
 {
@@ -27,7 +24,7 @@ namespace CAppBulkAndFileHelpers
                 for (int i = 1; i <= 500000; i++)
                 {
 
-                    produtos.Add(Produto.Create(string.Format("Description {0}", i)));
+                    produtos.Add(Produto.Create($"Description {i}"));
 
                 }
 
@@ -37,15 +34,15 @@ namespace CAppBulkAndFileHelpers
                 Console.WriteLine("");
                 Console.ReadKey();
 
-                long Init = w.Elapsed.Seconds;
+                long init = w.Elapsed.Seconds;
                 w.Start();
-                ctx.Insert(produtos, new EntityFramework.BulkInsert.Extensions.BulkInsertOptions() { EnableStreaming = true });
+                ctx.Insert(produtos, new EntityFramework.BulkInsert.Extensions.BulkInsertOptions { EnableStreaming = true });
                 w.Stop();
-                long End = w.Elapsed.Seconds;
+                long end = w.Elapsed.Seconds;
 
-                Console.WriteLine("Tempo inicial: {0}", Init);
-                Console.WriteLine("Tempo final: {0}", End);
-                Console.WriteLine("Tempo decorrido: {0}", End - Init);
+                Console.WriteLine("Tempo inicial: {0}", init);
+                Console.WriteLine("Tempo final: {0}", end);
+                Console.WriteLine("Tempo decorrido: {0}", end - init);
                 Console.WriteLine("");
                 Console.WriteLine("Fim ...");
                 Console.ReadKey();
@@ -69,15 +66,15 @@ namespace CAppBulkAndFileHelpers
                 Console.WriteLine("");
                 Console.ReadKey();
 
-                long Init = w.Elapsed.Seconds;
+                long init = w.Elapsed.Seconds;
                 w.Start();
-                ctx.Insert(produtos, new EntityFramework.BulkInsert.Extensions.BulkInsertOptions() { EnableStreaming = true });
+                ctx.Insert(produtos, new EntityFramework.BulkInsert.Extensions.BulkInsertOptions { EnableStreaming = true });
                 w.Stop();
-                long End = w.Elapsed.Seconds;
+                long end = w.Elapsed.Seconds;
 
-                Console.WriteLine("Tempo inicial: {0}", Init);
-                Console.WriteLine("Tempo final: {0}", End);
-                Console.WriteLine("Tempo decorrido: {0}", End - Init);
+                Console.WriteLine("Tempo inicial: {0}", init);
+                Console.WriteLine("Tempo final: {0}", end);
+                Console.WriteLine("Tempo decorrido: {0}", end - init);
                 Console.WriteLine("");
                 Console.WriteLine("Fim ...");
                 Console.ReadKey();
