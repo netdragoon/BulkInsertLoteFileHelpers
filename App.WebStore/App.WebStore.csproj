@@ -182,6 +182,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Dados.cs" />
     <Compile Include="Models\Examplo.cs" />
     <Compile Include="Models\ModelStateExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -229,6 +230,7 @@
     <Content Include="Views\Products\Index.cshtml" />
     <Content Include="Views\Exemplo\Create.cshtml" />
     <Content Include="Views\Exemplo\Index.cshtml" />
+    <Content Include="Views\Exemplo\_PartialPageExemplo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

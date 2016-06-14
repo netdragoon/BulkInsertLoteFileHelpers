@@ -1,6 +1,9 @@
-﻿@model IEnumerable<App.WebStore.Models.Exemplo>
+﻿@model IEnumerable<App.WebStore.Models.Dados>
 @{ ViewBag.Title = "Index"; }
-@using (Html.BeginForm("Resgatar", "Exemplo", FormMethod.Post))
+
+@Html.Action("IndexPartial")
+
+@*@using (Html.BeginForm("Resgatar", "Exemplo", FormMethod.Post))
 {
     <table class="table">
         <tr>
@@ -34,4 +37,4 @@
             </td>
         </tr>
     </table>
-}
+}*@

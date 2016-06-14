@@ -1,0 +1,28 @@
+﻿@model IEnumerable<App.WebStore.Models.Dados>
+
+@foreach (var m in Model)
+{
+    <hr class="separador" />
+    <div class="container">
+        <a href="#" class="dp1 d3 m3 s3">
+            <div>@m.Nome</div>
+        </a> <!-- Campo do NOme da facuade ex: Fmu -->
+        <a href="#" class="dp1 d3 m3 s3">
+            <div>@m.Curso</div>
+        </a><!-- Compo do nome do curso EX: Analise e desenvolvimento de sistemas -->
+        <div class="dp1 d3 m3 s3">@m.NotaAlunos</div><!-- Campo da nota do mec EX:3-->
+    </div>
+    <div class="container">
+        <div class="dp1 d3 m3 s3">@m.Valor</div><!-- Preço do curso EX: R$250,00-->
+        <div class="dp1 d3 m3 s3">@m.Periodo</div><!-- período do curso ex: matutino -->
+        <div class="dp1 d3 m3 s3">@m.Nota</div><!-- Nota que o aluno da para o curso e facudade Ex: curso nota 7 , Facul nota 3 -->
+    </div>
+    <div class="container">
+        <div class="dp1 d3 m3 s3">@m.Tipo</div><!-- Tipo do curso ex: Presencial, semi-Presencial, Ead -->
+        <div class="dp1 d3 m3 s3">@m.Duracao</div><!-- Duração do curso EX: 5 semetres -->
+        <a href="#" class="dp1 d3 m3 s3">
+            <div>@m.Comentarios</div>
+        </a><!-- Comentos dos alunos sobre o curso e/ou facuade -->
+    </div>
+    <hr />
+}

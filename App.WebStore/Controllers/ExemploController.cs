@@ -12,10 +12,63 @@ namespace App.WebStore.Controllers
         // GET: Exemplo
         public ActionResult Index()
         {
-            IList<Exemplo> exemplos = new List<Exemplo>();
-            exemplos.Add(new Exemplo {Id = 1, Nome = "Nome 1"});
-            exemplos.Add(new Exemplo { Id = 2, Nome = "Nome 2" });
-            return View(exemplos);
+            //IList<Dados> dados = new List<Dados>();
+            //dados.Add(new Dados
+            //{
+            //    Comentarios = "c",
+            //    Duracao = "1",
+            //    Id = 1, 
+            //    Nome = "N",
+            //    Nota    ="10",
+            //    NotaAlunos = "9.5",
+            //    Periodo = "Integral",
+            //    Tipo = "Tipo A",
+            //    Valor = 250
+            //});
+            //dados.Add(new Dados
+            //{
+            //    Comentarios = "b",
+            //    Duracao = "2",
+            //    Id = 2,
+            //    Nome = "A",
+            //    Nota = "9",
+            //    NotaAlunos = "8.9",
+            //    Periodo = "Matutino",
+            //    Tipo = "Tipo B",
+            //    Valor = 185.58M
+            //});
+            return View();
+        }
+
+        [OutputCache(Duration = 600)]
+        public PartialViewResult IndexPartial()
+        {
+            IList<Dados> dados = new List<Dados>();
+            dados.Add(new Dados
+            {
+                Comentarios = "c",
+                Duracao = "1",
+                Id = 1,
+                Nome = "N",
+                Nota = "10",
+                NotaAlunos = "9.5",
+                Periodo = "Integral",
+                Tipo = "Tipo A",
+                Valor = 250
+            });
+            dados.Add(new Dados
+            {
+                Comentarios = "b",
+                Duracao = "2",
+                Id = 2,
+                Nome = "A",
+                Nota = "9",
+                NotaAlunos = "8.9",
+                Periodo = "Matutino",
+                Tipo = "Tipo B",
+                Valor = 185.58M
+            });
+            return PartialView("_PartialPageExemplo", dados);
         }
 
         [HttpPost]
