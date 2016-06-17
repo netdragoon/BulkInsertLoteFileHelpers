@@ -1,0 +1,25 @@
+﻿@model WebApp.Models.AddViewModel
+@{ ViewBag.Title = "Details"; }
+<h2>Details</h2>
+<div>
+    <h4>AddViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <div>
+            <label>Nome Completo</label>
+            <p>@Model.PeopleViewModel.Name</p>
+        </div>
+        <div>
+            <label>Cidade</label>
+            <p>@Model.AddressViewModel.City</p>
+        </div>
+        <div>
+            <label>Estado</label>
+            <p>@Model.AddressViewModel.State</p>
+        </div>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PeopleViewModel.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

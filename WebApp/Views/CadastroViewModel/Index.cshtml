@@ -1,0 +1,31 @@
+﻿@model IEnumerable<WebApp.Models.AddViewModel>
+@{ ViewBag.Title = "Index"; }
+<h2>Lista</h2>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th class="text-center">Nome</th>
+        <th class="text-center">Cidade</th>
+        <th class="text-center">UF</th>
+        <th class="text-center">...</th>
+    </tr>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(c => item.PeopleViewModel.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(c => item.AddressViewModel.City)
+        </td>
+        <td class="text-center">
+            @Html.DisplayFor(c => item.AddressViewModel.State)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.PeopleViewModel.Id }) |
+            @Html.ActionLink("Details", "Details", new { id = item.PeopleViewModel.Id }) 
+        </td>
+    </tr>
+}
+</table>
