@@ -35,7 +35,7 @@ namespace WebApp.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            IEnumerable<AddViewModel> items =
+            IQueryable<AddViewModel> query =
                 Db.People.Select(c => new AddViewModel
                 {
                     PeopleViewModel = new PeopleViewModel()
@@ -46,18 +46,28 @@ namespace WebApp.Controllers
                     AddressViewModel = new AddressViewModel()
                     {
                         Id = c.Id,
-                        State = c.Address != null ? c.Address.State: null,
-                        City = c.Address != null ? c.Address.City: null
-                    }
-                }).ToList();
+                        State = c.Address != null ? c.Address.State : null,
+                        City = c.Address != null ? c.Address.City : null
+                    },
+                    PhoneViewModel = c.Phone.Select(a => new PhoneViewModel
+                    {
+                      Ddd  = a.Ddd, 
+                      Number = a.Number,
+                      PeopleId = a.PeopleId,
+                      Id = a.Id
+                    }).ToList()
+                }).AsQueryable();
+            IEnumerable<AddViewModel> items = query.ToList();
             return View(items);
         }
 
-
+        
         [HttpGet]
         public ActionResult Create()
         {
-            return View();
+            AddViewModel item = new AddViewModel();
+            item.PhoneViewModel = GetPhoneViewModelDefault(0);
+            return View(item);
         }
 
         [HttpPost]
@@ -76,6 +86,20 @@ namespace WebApp.Controllers
 
                 Db.People.Add(people);
                 Db.Address.Add(address);
+
+                if (addViewModel?.PhoneViewModel.Count > 0)
+                {
+                    foreach (PhoneViewModel items in addViewModel.PhoneViewModel)
+                    {
+                        people.Phone.Add(new Phone
+                        {
+                            PeopleId = people.Id,
+                            People = people,
+                            Ddd = items.Ddd, 
+                            Number = items.Number
+                        });
+                    }
+                }
 
                 Db.SaveChanges();
             }
@@ -113,7 +137,31 @@ namespace WebApp.Controllers
                         people.Address.People = people;
                         Db.SaveChanges();
                     }
-
+                    if (addViewModel.PhoneViewModel != null)
+                    {
+                        foreach (PhoneViewModel phoneViewModel in addViewModel.PhoneViewModel)
+                        {
+                            Phone phone = Db.Phone.Find(phoneViewModel.Id);
+                            if (phone != null)
+                            {
+                                phone.Ddd = phoneViewModel.Ddd;
+                                phone.Number = phoneViewModel.Number;
+                                Db.SaveChanges();
+                            }
+                            else
+                            {
+                                phone = new Phone
+                                {
+                                    Ddd = phoneViewModel.Ddd,
+                                    Number = phoneViewModel.Number,
+                                    People = people,
+                                    PeopleId = phoneViewModel.PeopleId
+                                };
+                                Db.Phone.Add(phone);
+                                Db.SaveChanges();
+                            }
+                        }
+                    }
                 }
 
             }
@@ -128,12 +176,42 @@ namespace WebApp.Controllers
             return View(item);
         }
 
+
+        //metodo server para criar lista default ou padrão ou inicial
+        protected ICollection<PhoneViewModel> GetPhoneViewModelDefault(int peopleid = 0)
+        {
+            ICollection<PhoneViewModel> phones = new List<PhoneViewModel>();
+            phones.Add(new PhoneViewModel
+            {
+                Id = 0,
+                PeopleId = peopleid,
+                Number = string.Empty,
+                Ddd = string.Empty
+            });
+            phones.Add(new PhoneViewModel
+            {
+                Id = 0,
+                PeopleId = peopleid,
+                Number = string.Empty,
+                Ddd = string.Empty
+            });
+            phones.Add(new PhoneViewModel
+            {
+                Id = 0,
+                PeopleId = peopleid,
+                Number = string.Empty,
+                Ddd = string.Empty
+            });
+            return phones;
+        }
+
         //metodo server para recuperar
         protected AddViewModel GetById(int? id)
         {
             //
             People people = Db.People.Find(id);
             Address address = Db.Address.Find(id);
+            IList<Phone> phones = Db.Phone.Where(c => c.PeopleId == id.Value).ToList();
             //
             AddViewModel item = new AddViewModel();
             //
@@ -156,6 +234,23 @@ namespace WebApp.Controllers
                     State = address.State,
                     City = address.City
                 };
+            }
+            if (phones.Count > 0)
+            {
+                foreach (Phone phone in phones)
+                {
+                    item.PhoneViewModel.Add(new PhoneViewModel
+                    {
+                        Id = phone.Id,
+                        PeopleId = phone.PeopleId,
+                        Ddd = phone.Ddd,
+                        Number = phone.Number
+                    });
+                }
+            }
+            else
+            {
+                item.PhoneViewModel = GetPhoneViewModelDefault(people.Id);
             }
             //
             return item;

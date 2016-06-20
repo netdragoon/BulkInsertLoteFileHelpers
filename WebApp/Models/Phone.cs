@@ -12,19 +12,13 @@ namespace WebApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class People
+    public partial class Phone
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public People()
-        {
-            this.Phone = new HashSet<Phone>();
-        }
-    
         public int Id { get; set; }
-        public string Name { get; set; }
+        public Nullable<int> PeopleId { get; set; }
+        public string Ddd { get; set; }
+        public string Number { get; set; }
     
-        public virtual Address Address { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Phone> Phone { get; set; }
+        public virtual People People { get; set; }
     }
 }

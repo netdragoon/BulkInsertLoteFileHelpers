@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="WebAppModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="WebAppModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Address">
           <Key>
             <PropertyRef Name="Id" />
@@ -20,6 +20,15 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="Phone">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PeopleId" Type="int" />
+          <Property Name="Ddd" Type="nvarchar" MaxLength="3" />
+          <Property Name="Number" Type="nvarchar" MaxLength="14" />
+        </EntityType>
         <Association Name="FK_Address_People">
           <End Role="People" Type="Self.People" Multiplicity="1" />
           <End Role="Address" Type="Self.Address" Multiplicity="0..1" />
@@ -32,16 +41,32 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Phone_People">
+          <End Role="People" Type="Self.People" Multiplicity="0..1" />
+          <End Role="Phone" Type="Self.Phone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Phone">
+              <PropertyRef Name="PeopleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="WebAppModelStoreContainer">
           <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="People" EntityType="Self.People" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Phone" EntityType="Self.Phone" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Address_People" Association="Self.FK_Address_People">
             <End Role="People" EntitySet="People" />
             <End Role="Address" EntitySet="Address" />
           </AssociationSet>
+          <AssociationSet Name="FK_Phone_People" Association="Self.FK_Phone_People">
+            <End Role="People" EntitySet="People" />
+            <End Role="Phone" EntitySet="Phone" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="WebAppModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -61,6 +86,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Address" Relationship="Self.FK_Address_People" FromRole="People" ToRole="Address" />
+          <NavigationProperty Name="Phone" Relationship="WebAppModel.FK_Phone_People" FromRole="People" ToRole="Phone" />
         </EntityType>
         <Association Name="FK_Address_People">
           <End Role="People" Type="Self.People" Multiplicity="1" />
@@ -81,7 +107,34 @@
             <End Role="People" EntitySet="People" />
             <End Role="Address" EntitySet="Address" />
           </AssociationSet>
+          <EntitySet Name="Phone" EntityType="WebAppModel.Phone" />
+          <AssociationSet Name="FK_Phone_People" Association="WebAppModel.FK_Phone_People">
+            <End Role="People" EntitySet="People" />
+            <End Role="Phone" EntitySet="Phone" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Phone">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PeopleId" Type="Int32" />
+          <Property Name="Ddd" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="Number" Type="String" MaxLength="14" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="People" Relationship="WebAppModel.FK_Phone_People" FromRole="Phone" ToRole="People" />
+        </EntityType>
+        <Association Name="FK_Phone_People">
+          <End Type="WebAppModel.People" Role="People" Multiplicity="0..1" />
+          <End Type="WebAppModel.Phone" Role="Phone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Phone">
+              <PropertyRef Name="PeopleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -102,6 +155,16 @@
               <MappingFragment StoreEntitySet="People">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Phone">
+            <EntityTypeMapping TypeName="WebAppModel.Phone">
+              <MappingFragment StoreEntitySet="Phone">
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Ddd" ColumnName="Ddd" />
+                <ScalarProperty Name="PeopleId" ColumnName="PeopleId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

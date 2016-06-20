@@ -23,29 +23,54 @@
             <label class="control-label col-md-2">Nome Completo:</label>
             <div class="col-md-offset-2 col-md-10">
                 @Html.EditorFor(c => c.PeopleViewModel.Name)
-                @Html.ValidationMessageFor(model => model.PeopleViewModel.Name, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.PeopleViewModel.Name, "", new {@class = "text-danger"})
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-md-2">Cidade:</label>
             <div class="col-md-offset-2 col-md-10">
                 @Html.EditorFor(c => c.AddressViewModel.City)
-                @Html.ValidationMessageFor(model => model.AddressViewModel.City, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.AddressViewModel.City, "", new {@class = "text-danger"})
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-md-2">Uf:</label>
             <div class="col-md-offset-2 col-md-10">
                 @Html.EditorFor(c => c.AddressViewModel.State)
-                @Html.ValidationMessageFor(model => model.AddressViewModel.State, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.AddressViewModel.State, "", new {@class = "text-danger"})
             </div>
         </div>
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="@labelBtn" class="btn btn-primary" />
+                <input type="submit" value="@labelBtn" class="btn btn-primary"/>
             </div>
         </div>
+    </div>
+    <div class="form-horizontal">
+        <h4>Telefones</h4>
+        @{
+            int cIndex = 0;
+        }
+        @if (Model != null)
+        {
+            foreach (var phone in Model.PhoneViewModel)
+            {
+                @Html.Hidden(string.Format("PhoneViewModel[{0}].Id", cIndex), phone.Id)
+                @Html.Hidden(string.Format("PhoneViewModel[{0}].PeopleId", cIndex), phone.PeopleId)
+                <div class="form-group">
+                    <label class="control-label col-md-2">DDD/Telefone</label>
+                    <div class="col-md-offset-2 col-md-10">
+                        @Html.TextBox(string.Format("PhoneViewModel[{0}].Ddd", cIndex), phone.Ddd) /
+                        @Html.TextBox(string.Format("PhoneViewModel[{0}].Number", cIndex), phone.Number)
+
+                        @Html.ValidationMessage(string.Format("PhoneViewModel[{0}].Ddd", cIndex), "", new {@class = "text-danger"})
+                        @Html.ValidationMessage(string.Format("PhoneViewModel[{0}].Number", cIndex), "", new {@class = "text-danger"})
+                    </div>
+                </div>
+                cIndex++;
+            }
+        }
     </div>
 }
 <div>
